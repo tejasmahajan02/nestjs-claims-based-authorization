@@ -1,3 +1,4 @@
+// scope => <action>:<resource>
 export enum Action {
   CREATE = 'create',
   READ = 'read',

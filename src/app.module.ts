@@ -8,6 +8,9 @@ import { PermissionModule } from './modules/permission/permission.module';
 import { RolePermissionModule } from './modules/role-permission/role-permission.module';
 import { UserRoleModule } from './modules/user-role/user-role.module';
 import { CommonModule } from './common/common.module';
+import { CatModule } from './modules/cat/cat.module';
+import { DogModule } from './modules/dog/dog.module';
+import { PermissionRegistryModule } from './modules/permission-registry/permission-registry.module';
 
 @Module({
   imports: [
@@ -20,6 +23,9 @@ import { CommonModule } from './common/common.module';
     RolePermissionModule,
     UserRoleModule,
     CommonModule,
+    CatModule,
+    DogModule,
+    PermissionRegistryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
