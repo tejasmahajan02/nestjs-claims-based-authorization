@@ -14,6 +14,7 @@ import { RequirePermissions } from 'src/common/decorators/require-permissions.de
 import { CatPermission } from './enum/cat-permissions.enum';
 import { ResponseMessage } from 'src/common/decorators/response-message.decorator';
 import { CatMessages } from './constants/cat.messages';
+import { Paginated } from 'src/common/decorators/paginated.decorator';
 
 @Controller('cats')
 export class CatController {
@@ -29,6 +30,7 @@ export class CatController {
   @Get()
   @RequirePermissions(CatPermission.READ)
   @ResponseMessage(CatMessages.SUCCESS.FOUND_ALL)
+  @Paginated()
   findAll() {
     return this.catService.findAll();
   }

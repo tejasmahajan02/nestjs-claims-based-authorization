@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
+import { PaginatedResult } from 'src/common/types/paginated-result.type';
 
 @Injectable()
 export class CatService {
@@ -8,8 +9,11 @@ export class CatService {
     return 'This action adds a new cat';
   }
 
-  findAll() {
-    return `This action returns all cat`;
+  findAll(): PaginatedResult<CreateCatDto> {
+    return {
+      data: [],
+      meta: {},
+    };
   }
 
   findOne(id: number) {
