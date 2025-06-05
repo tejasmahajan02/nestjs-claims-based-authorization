@@ -11,11 +11,16 @@ import { CommonModule } from './common/common.module';
 import { CatModule } from './modules/cat/cat.module';
 import { DogModule } from './modules/dog/dog.module';
 import { PermissionRegistryModule } from './modules/permission-registry/permission-registry.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+    CacheModule.register({
+      isGlobal: true,
+      ttl: 60000, // milliseconds
     }),
     UserModule,
     RoleModule,

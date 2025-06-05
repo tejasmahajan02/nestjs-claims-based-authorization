@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CatService } from './cat.service';
 import { CreateCatDto } from './dto/create-cat.dto';
@@ -15,6 +16,9 @@ import { CatPermission } from './enum/cat-permissions.enum';
 import { ResponseMessage } from 'src/common/decorators/response-message.decorator';
 import { CatMessages } from './constants/cat.messages';
 import { Paginated } from 'src/common/decorators/paginated.decorator';
+import { HttpCacheInterceptor } from 'src/common/interceptors/http-cache.interceptor';
+import { resolve } from 'path';
+import { delay } from 'src/common/utils/helpers.util';
 
 @Controller('cats')
 export class CatController {
@@ -28,10 +32,12 @@ export class CatController {
   }
 
   @Get()
-  @RequirePermissions(CatPermission.READ)
+  @UseInterceptors(HttpCacheInterceptor)
+  // @RequirePermissions(CatPermission.READ)
   @ResponseMessage(CatMessages.SUCCESS.FOUND_ALL)
   @Paginated()
-  findAll() {
+  async findAll() {
+    await delay();
     return this.catService.findAll();
   }
 
