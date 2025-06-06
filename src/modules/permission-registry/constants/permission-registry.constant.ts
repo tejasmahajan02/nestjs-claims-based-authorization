@@ -1,5 +1,5 @@
-import { CatPermission } from 'src/modules/cat/enum/cat-permissions.enum';
-import { DogPermission } from 'src/modules/dog/enum/dog-permissions.enum';
+import { CatPermission } from 'src/modules/cat/enum/cat-permission.enum';
+import { DogPermission } from 'src/modules/dog/enum/dog-permission.enum';
 
 export const PERMISSION_REGISTRY_SET = new Set([
   ...Object.values(CatPermission),
