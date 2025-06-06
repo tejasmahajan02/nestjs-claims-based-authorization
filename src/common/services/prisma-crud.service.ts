@@ -33,7 +33,7 @@ export abstract class PrismaCrudService<
 
   async findAll(params?: { where?: TWhereInput }): Promise<TModel[]> {
     const { where } = params || {};
-    return this.delegate.findMany({
+    return await this.delegate.findMany({
       ...(where && { where }),
     });
   }
@@ -46,7 +46,7 @@ export abstract class PrismaCrudService<
     orderBy?: TOrderByWithRelationInput;
   }): Promise<TModel[]> {
     const { skip = 0, take = 10, cursor, where, orderBy } = params || {};
-    return this.delegate.findMany({
+    return await this.delegate.findMany({
       skip,
       take,
       ...(cursor && { cursor }),

@@ -1,0 +1,28 @@
+@baseUrl = http://localhost:3001/users
+
+### Create a user
+POST {{baseUrl}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "test",
+  "email": "test12@gmail.com"
+}
+
+
+### Get all users
+GET {{baseUrl}}?take=1 HTTP/1.1
+
+### Get user by id
+GET {{baseUrl}}/1 HTTP/1.1
+
+### Create a user
+PATCH {{baseUrl}}/3 HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "tester"
+}
+
+### Delete user by id
+DELETE  {{baseUrl}}/1 HTTP/1.1

@@ -33,11 +33,10 @@ export class CatController {
 
   @Get()
   @UseInterceptors(HttpCacheInterceptor)
-  // @RequirePermissions(CatPermission.READ)
+  @RequirePermissions(CatPermission.READ)
   @ResponseMessage(CatMessages.SUCCESS.FOUND_ALL)
   @Paginated()
   async findAll() {
-    await delay();
     return this.catService.findAll();
   }
 

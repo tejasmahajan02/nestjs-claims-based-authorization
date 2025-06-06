@@ -9,4 +9,5 @@ export const mockCreatePermissionDto: CreatePermissionDto = {
 export const mockPermission: Permission = {
   id: 1,
   ...mockCreatePermissionDto,
+  tenantId: null
 };

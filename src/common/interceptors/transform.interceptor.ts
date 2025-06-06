@@ -3,6 +3,7 @@ import {
   NestInterceptor,
   ExecutionContext,
   CallHandler,
+  Logger,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
@@ -16,6 +17,8 @@ import { isEmpty } from '../utils/helpers.util';
 export class TransformInterceptor<T>
   implements NestInterceptor<T, Response<T>>
 {
+  private readonly logger = new Logger(TransformInterceptor.name);
+
   constructor(private reflector: Reflector) {}
 
   intercept(
@@ -33,23 +36,31 @@ export class TransformInterceptor<T>
 
     return next.handle().pipe(
       map((response) => {
-        if (isPaginated) {
-          const isValidShape =
-            response &&
-            typeof response === 'object' &&
-            !Array.isArray(response) &&
-            'data' in response &&
-            'meta' in response;
+        const isPaginatedShape =
+          response &&
+          typeof response === 'object' &&
+          !Array.isArray(response) &&
+          'data' in response &&
+          'meta' in response;
 
-          if (isValidShape) {
-            const { data: items = [], meta = {} } = response ?? {};
-            return {
-              data: items,
-              message: responseMessage,
-              hasData: !isEmpty(items),
-              meta,
-            };
-          }
+        if (
+          !isPaginated &&
+          isPaginatedShape &&
+          process.env.NODE_ENV !== 'production'
+        ) {
+          this.logger.warn(
+            `[Pagination] Missing @Paginated() decorator for ${context.getClass().name}.${context.getHandler().name}`,
+          );
+        }
+
+        if (isPaginated || isPaginatedShape) {
+          const { data: items = [], meta = {} } = response ?? {};
+          return {
+            data: items,
+            message: responseMessage,
+            hasData: !isEmpty(items),
+            meta,
+          };
         }
 
         return {

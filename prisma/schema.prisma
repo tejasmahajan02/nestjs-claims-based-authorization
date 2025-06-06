@@ -14,7 +14,20 @@ model User {
   name     String?
   UserRole UserRole[]
 
+  tenantId Int?
+  tenant   Tenant?    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
   @@map("user")
+}
+
+model Tenant {
+  id   Int    @id @default(autoincrement())
+  name String
+  user User[]
+  role Role[]
+  permission Permission[]
+
+  @@map("tenant")
 }
 
 model Role {
@@ -24,6 +37,9 @@ model Role {
   RolePermission RolePermission[]
   UserRole       UserRole[]
 
+  tenantId Int?
+  tenant   Tenant?    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
   @@map("role")
 }
 
@@ -32,6 +48,9 @@ model Permission {
   scope          String           @unique
   description    String
   RolePermission RolePermission[]
+
+  tenantId Int?
+  tenant   Tenant?    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
   @@map("permission")
 }

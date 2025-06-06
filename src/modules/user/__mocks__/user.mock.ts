@@ -10,4 +10,5 @@ export const mockUser: User = {
   id: 1,
   ...mockCreateUserDto,
   name: mockCreateUserDto.name ?? null,
+  tenantId: null
 };

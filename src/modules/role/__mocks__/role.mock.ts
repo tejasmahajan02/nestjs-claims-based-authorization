@@ -8,5 +8,6 @@ export const mockCreateRoleDto: CreateRoleDto = {
 
 export const mockRole: Role = {
   id: 1,
-  ...mockCreateRoleDto
+  ...mockCreateRoleDto,
+  tenantId: null
 };

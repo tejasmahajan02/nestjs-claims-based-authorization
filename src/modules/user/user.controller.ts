@@ -13,6 +13,9 @@ import { ResponseMessage } from 'src/common/decorators/response-message.decorato
 import { UserMessages } from './constants/user.messages';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Paginated } from 'src/common/decorators/paginated.decorator';
+import { PaginatedResult } from 'src/common/types/paginated-result.type';
+import { User } from 'generated/prisma';
 
 @Controller('users')
 export class UserController {
@@ -26,8 +29,11 @@ export class UserController {
 
   @Get()
   @ResponseMessage(UserMessages.SUCCESS.FOUND_ALL)
-  async findAll(@Query('userId') userId: number) {
-    return await this.userService.findAll({ where: { id: userId } });
+  @Paginated()
+  async findAll(
+    @Query('take') take: number = 5,
+  ): Promise<PaginatedResult<User>> {
+    return { data: await this.userService.paginate({ take }), meta: { take } };
   }
 
   @Get(':userId')
