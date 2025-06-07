@@ -1,10 +1,5 @@
-import { Prisma, PrismaClient } from "generated/prisma";
-
-export enum Roles {
-  SUPER_ADMIN = 'super_admin',
-  TENANT_ADMIN = 'admin',
-  EMPLOYEE = 'employee',
-}
+import { Prisma, PrismaClient } from 'generated/prisma';
+import { Roles } from '../enums/roles.enum';
 
 export async function seedRoles(prisma: PrismaClient) {
   const roles: Prisma.RoleCreateInput[] = [

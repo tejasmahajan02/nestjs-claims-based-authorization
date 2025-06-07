@@ -1,3 +1,15 @@
+export type PaginatedArgs<
+  TWhereUniqueInput,
+  TWhereInput,
+  TOrderByWithRelationInput,
+> = {
+  skip?: number;
+  take?: number;
+  cursor?: TWhereUniqueInput;
+  where?: TWhereInput;
+  orderBy?: TOrderByWithRelationInput;
+};
+
 export abstract class PrismaCrudService<
   TModel,
   TCreateInput,

@@ -20,6 +20,7 @@ import { User } from 'generated/prisma';
 import { UserPermission } from './enum/user-permission.enum';
 import { RequirePermissions } from 'src/common/decorators/require-permissions.decorator';
 import { HttpCacheInterceptor } from 'src/common/interceptors/http-cache.interceptor';
+import { PaginationOptionsDto } from 'src/common/dtos/pagination-options.dto';
 
 @Controller('users')
 export class UserController {
@@ -34,13 +35,19 @@ export class UserController {
 
   @Get()
   @UseInterceptors(HttpCacheInterceptor)
-  @RequirePermissions(UserPermission.READ)
+  // @RequirePermissions(UserPermission.READ)
   @ResponseMessage(UserMessages.SUCCESS.FOUND_ALL)
   @Paginated()
   async findAll(
-    @Query('take') take: number = 5,
+    @Query() paginationOptionsDto: PaginationOptionsDto,
   ): Promise<PaginatedResult<User>> {
-    return { data: await this.userService.paginate({ take }), meta: { take } };
+    const { take, cursor } = paginationOptionsDto;
+    const args = { take, ...(cursor && { cursor }) };
+    console.log({args})
+    return {
+      data: await this.userService.paginate(args as any),
+      meta: paginationOptionsDto,
+    };
   }
 
   @Get(':userId')

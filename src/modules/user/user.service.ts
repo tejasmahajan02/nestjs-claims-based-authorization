@@ -14,7 +14,6 @@ export class UserService extends PrismaCrudService<
 > {
   constructor(private readonly prismaService: PrismaService) {
     super(prismaService.user);
-    // prismaService.user.findMany({take})
   }
 
   async queryAll(): Promise<User[]> {

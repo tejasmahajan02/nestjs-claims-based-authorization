@@ -12,6 +12,9 @@ import { CatModule } from './modules/cat/cat.module';
 import { DogModule } from './modules/dog/dog.module';
 import { PermissionRegistryModule } from './modules/permission-registry/permission-registry.module';
 import { CacheModule } from '@nestjs/cache-manager';
+import { TenantModule } from './modules/tenant/tenant.module';
+import { PermissionsGuard } from './common/guards/permissions.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -31,8 +34,15 @@ import { CacheModule } from '@nestjs/cache-manager';
     CatModule,
     DogModule,
     PermissionRegistryModule,
+    TenantModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: PermissionsGuard,
+    },
+  ],
 })
 export class AppModule {}

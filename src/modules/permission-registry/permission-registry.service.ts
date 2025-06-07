@@ -1,17 +1,17 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import {
-  PERMISSION_REGISTRY,
-  PERMISSION_REGISTRY_SET,
+  GLOBAL_SCOPES_ARRAY,
+  GLOBAL_SCOPES_SET,
 } from './constants/permission-registry.constant';
 
 @Injectable()
 export class PermissionRegistryService {
   findAll() {
-    return PERMISSION_REGISTRY;
+    return GLOBAL_SCOPES_ARRAY;
   }
 
   findOne(scope: string) {
-    const isValid = PERMISSION_REGISTRY_SET.has(scope as any);
+    const isValid = GLOBAL_SCOPES_SET.has(scope as any);
     if (!isValid) throw new BadRequestException('Incorrect permission scope.');
     return isValid;
   }
